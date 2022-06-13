@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Alumno\\.nuget\\packages\\": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alumno\\Documents\\RPG\\rpg-2022-bobadillajuan\\rpg-2022-bobadillajuan.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\RPG\\rpg-2022-bobadillajuan\\rpg-2022-bobadillajuan.csproj",
       "projectName": "rpg-2022-bobadillajuan",
-      "projectPath": "C:\\Users\\Alumno\\Documents\\RPG\\rpg-2022-bobadillajuan\\rpg-2022-bobadillajuan.csproj",
-      "packagesPath": "C:\\Users\\Alumno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alumno\\Documents\\RPG\\rpg-2022-bobadillajuan\\obj\\",
+      "projectPath": "C:\\Users\\Usuario\\Desktop\\RPG\\rpg-2022-bobadillajuan\\rpg-2022-bobadillajuan.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuario\\Desktop\\RPG\\rpg-2022-bobadillajuan\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Alumno\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
