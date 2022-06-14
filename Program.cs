@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-//Esto funciona para una sola carga por equipo
-
 namespace rpg_2022_bobadillajuan
 {
     class Program
@@ -42,7 +40,6 @@ namespace rpg_2022_bobadillajuan
             Console.WriteLine("\n------ Peleador Dire: ------");
             PeleadorTeamDire.MostrarDatos();
 
-            //Hasta aquí con más de una carga funciona bien
             Batalla(PeleadorTeamRadiant, PeleadorTeamDire);
             //Por alguna razón una vez que salimo de aquí, el Personaje en la lista original tiene su nombre cambiado a perdedor, 
             //No tan solo PeleadorTeamX.
@@ -142,7 +139,6 @@ namespace rpg_2022_bobadillajuan
             Personajes Peleador = new Personajes();
             foreach (var personaje in Team)
             {
-                //Aca se repite el bucle a pesar de que hay un break
                 personaje.MostrarEnListado();
                 do{
                 Console.WriteLine("\n¿Desea que este personaje se una a la batalla?\n1) Sí. ---- 2) No.");
