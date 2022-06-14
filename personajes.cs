@@ -39,5 +39,10 @@ public class Personajes{
         Console.WriteLine("\nNivel: "+nivel+"\tArmadura: "+armadura);
     }
 
+    public void MostrarEnListado(){
+        Console.WriteLine("------");
+        Console.WriteLine("\n" + apodo + " " + tipo + " Salud: " + salud);
+    }
+
 
 }

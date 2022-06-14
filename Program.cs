@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+//Esto funciona para una sola carga por equipo
+
 namespace rpg_2022_bobadillajuan
 {
     class Program
@@ -9,9 +11,60 @@ namespace rpg_2022_bobadillajuan
 
             List <Personajes> TeamRadiant = new List<Personajes>();
             List <Personajes> TeamDire = new List<Personajes>();
+            Personajes PeleadorTeamRadiant = new Personajes();
+            Personajes PeleadorTeamDire = new Personajes();
 
+            //Carga de peleadores
+            Console.WriteLine("\n--- Carga de personajes para el Team Radiant ---");
             CargarDatos(TeamRadiant);
             foreach (Personajes personajeX in TeamRadiant)
+            {
+                personajeX.MostrarDatos();
+                personajeX.MostrarCaracteristicas();
+            }
+            Console.WriteLine("\n--- Carga de personajes para el Team Dire ---");
+            CargarDatos(TeamDire);
+            foreach (Personajes personajeX in TeamDire)
+            {
+                personajeX.MostrarDatos();
+                personajeX.MostrarCaracteristicas();
+            }
+
+            //Pelea
+            Console.WriteLine("\n--- ¡Empieza la batalla! Por favor, elige bien tu personaje. ---");
+            Console.WriteLine("\nElección de TEAM RADIANT: ");
+            PeleadorTeamRadiant = Peleador(TeamRadiant);
+            Console.WriteLine("\nElección de TEAM DIRE: ");
+            PeleadorTeamDire = Peleador(TeamDire);
+
+            Console.WriteLine("\n------ Peleador Radiant: ------");
+            PeleadorTeamRadiant.MostrarDatos();
+            Console.WriteLine("\n------ Peleador Dire: ------");
+            PeleadorTeamDire.MostrarDatos();
+
+            //Hasta aquí con más de una carga funciona bien
+            Batalla(PeleadorTeamRadiant, PeleadorTeamDire);
+            //Por alguna razón una vez que salimo de aquí, el Personaje en la lista original tiene su nombre cambiado a perdedor, 
+            //No tan solo PeleadorTeamX.
+
+
+            if(PeleadorTeamDire.Nombre == "Perdedor")
+            PostBatalla(PeleadorTeamDire, TeamDire);
+
+            if(PeleadorTeamRadiant.Nombre == "Perdedor")
+            PostBatalla(PeleadorTeamRadiant, TeamRadiant);
+
+
+            //Controlamos los resultados de la batalla
+            Console.WriteLine("\n------ Peleadores Radiant Restantes: ------");
+            foreach (Personajes personajeX in TeamRadiant)
+            {
+                personajeX.MostrarDatos();
+                personajeX.MostrarCaracteristicas();
+            }
+
+            Console.WriteLine("\n------ Peleadores Dire Restantes: ------");
+            foreach (Personajes personajeX in TeamDire)
             {
                 personajeX.MostrarDatos();
                 personajeX.MostrarCaracteristicas();
@@ -65,7 +118,7 @@ namespace rpg_2022_bobadillajuan
 
             Team.Add(AuxTeam);
 
-            //Control para seguir agregando
+            //Control para seguir agregando. Por ahora sin límites.
             Console.WriteLine("\n¿Desea agregar otro personaje?\n1) Sí. ---- 2) No.");
             do{controlador = Convert.ToInt32(Console.ReadLine());}while(controlador != 1 && controlador !=2);
 
@@ -84,27 +137,54 @@ namespace rpg_2022_bobadillajuan
             return buff;
         }
 
-        // Esto lo puedo hacer aquí con un bucle para tener toda la lista, o usar definir un método dentro de la clase
-        // public static void MostrarDatos(List <Personajes> Team){
+        public static Personajes Peleador (List <Personajes> Team){
+            int controlPeleador = 0;
+            Personajes Peleador = new Personajes();
+            foreach (var personaje in Team)
+            {
+                //Aca se repite el bucle a pesar de que hay un break
+                personaje.MostrarEnListado();
+                do{
+                Console.WriteLine("\n¿Desea que este personaje se una a la batalla?\n1) Sí. ---- 2) No.");
+                controlPeleador = Convert.ToInt32(Console.ReadLine());
+                if (controlPeleador == 1){
+                Peleador = personaje;
+                break;
+                }
+                }while(controlPeleador != 1 && controlPeleador !=2);
+                if (controlPeleador == 1)
+                break;
+            }
+            return Peleador;
+        }
 
-        //     for (int i = 0; i < Team.Count; i++)
-        //     {
-        //     Console.WriteLine("\nApodo del personaje: " + Team[i].Apodo);
-        //     Console.WriteLine("\nNombre del personaje: " + Team[i].Nombre);
-        //     Console.WriteLine("\nTipo del personaje: " + Team[i].Tipo);
-        //     Console.WriteLine("\nFecha de nacimietno del personaje: " + Team[i].FechaDeNacimiento);
+        public static void Batalla(Personajes teamRadiant, Personajes teamDire){
+            Console.WriteLine("\n¡Hora de la batalla!");
+            if (teamRadiant.Fuerza >= teamDire.Fuerza){
+                Console.WriteLine("\n¡Gana el TEAM RADIANT!");
+                teamDire.Nombre = "Perdedor";
+                //Por ahora no voy a cambiar stats ni evaluaré otras formas de batalla.
+            }else{
+                Console.WriteLine("\n¡Gana el TEAM DIRE!");
+                teamRadiant.Nombre = "Perdedor";
+            }
+        }
 
+        public static void PostBatalla(Personajes perdedor, List<Personajes> teamPerdedor){
 
+            int controlador = 0;
+            while (controlador < teamPerdedor.Count)
+            {
+                if (teamPerdedor[controlador].Apodo == perdedor.Apodo)
+                {
+                    teamPerdedor.Remove(teamPerdedor[controlador]);
+                }
+                controlador++;
+            }
+        }
 
+        
 
-        //     }
-            
-        // }
 
     }
 }
-
-            // do{
-            // Console.WriteLine("Ingrese el nombre del personaje: ");
-            // buff = Console.ReadLine();
-            // } while (string.IsNullOrEmpty(buff));
