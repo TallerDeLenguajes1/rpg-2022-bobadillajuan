@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using System.Collections.Generic;
 
 namespace rpg_2022_bobadillajuan
@@ -7,10 +8,47 @@ namespace rpg_2022_bobadillajuan
     {
         static int Main(string[] args){
 
+
+            // V 1.0: Carga y guarda correctamente los datos. La pelea se hace según una sola variable y se elimina correctamente.
+            // Debemos: Pasar a que la carga sea automatizada y que los resultados se guarden en un archivo JSON. Nos tiene que dar a elegir
+            // si es que queremos imprimir el archivo JSON.
+
+            // Comienzo V1.1 20:19 Agregamos un switch. 
+            // V1.1 20:36 Al ganador lo escribe dentro de nuestro archivo JSON. Todavía no podemos sacar jugadores desde ahí.
+
+
+
             List <Personajes> TeamRadiant = new List<Personajes>();
             List <Personajes> TeamDire = new List<Personajes>();
             Personajes PeleadorTeamRadiant = new Personajes();
             Personajes PeleadorTeamDire = new Personajes();
+
+
+            int opcion = 0;
+            Console.WriteLine("\n----- Bienvenido a DotA -----");
+            Console.WriteLine("\nPor favor, elija una opción: \n");
+            Console.WriteLine("1) Jugar.");
+            Console.WriteLine("2) Historial de partidas.");
+            Console.WriteLine("3) Salir.");
+            opcion = Convert.ToInt32(Console.ReadLine());
+
+            // V 1.1: Todo deberia estar adentro de switch pero alta paja ahora.
+            do{
+            switch (opcion)
+            {
+                case 1: 
+                    break;
+
+                case 2: 
+                    break;
+
+                default:
+                Console.WriteLine("\nPor favor ingrese nuevamente la opcion");
+                    break;
+
+            }
+            }while(opcion != 3);
+
 
             //Carga de peleadores
             Console.WriteLine("\n--- Carga de personajes para el Team Radiant ---");
@@ -30,10 +68,15 @@ namespace rpg_2022_bobadillajuan
 
             //Pelea
             Console.WriteLine("\n--- ¡Empieza la batalla! Por favor, elige bien tu personaje. ---");
+            Console.WriteLine("\n¡Presione enter para continuar!");
+            Console.ReadLine();
+
             Console.WriteLine("\nElección de TEAM RADIANT: ");
             PeleadorTeamRadiant = Peleador(TeamRadiant);
             Console.WriteLine("\nElección de TEAM DIRE: ");
             PeleadorTeamDire = Peleador(TeamDire);
+
+
 
             Console.WriteLine("\n------ Peleador Radiant: ------");
             PeleadorTeamRadiant.MostrarDatos();
@@ -41,7 +84,7 @@ namespace rpg_2022_bobadillajuan
             PeleadorTeamDire.MostrarDatos();
 
             Batalla(PeleadorTeamRadiant, PeleadorTeamDire);
-            //Por alguna razón una vez que salimo de aquí, el Personaje en la lista original tiene su nombre cambiado a perdedor, 
+            //Por alguna razón una vez que salimos de aquí, el Personaje en la lista original tiene su nombre cambiado a perdedor, 
             //No tan solo PeleadorTeamX.
 
 
@@ -65,6 +108,7 @@ namespace rpg_2022_bobadillajuan
             {
                 personajeX.MostrarDatos();
                 personajeX.MostrarCaracteristicas();
+
             }
 
             return 0;
@@ -155,14 +199,19 @@ namespace rpg_2022_bobadillajuan
         }
 
         public static void Batalla(Personajes teamRadiant, Personajes teamDire){
+
             Console.WriteLine("\n¡Hora de la batalla!");
             if (teamRadiant.Fuerza >= teamDire.Fuerza){
                 Console.WriteLine("\n¡Gana el TEAM RADIANT!");
                 teamDire.Nombre = "Perdedor";
+                SerializarPersonajeGanador(teamRadiant);
+
                 //Por ahora no voy a cambiar stats ni evaluaré otras formas de batalla.
             }else{
                 Console.WriteLine("\n¡Gana el TEAM DIRE!");
                 teamRadiant.Nombre = "Perdedor";
+                SerializarPersonajeGanador(teamDire);
+
             }
         }
 
@@ -179,6 +228,22 @@ namespace rpg_2022_bobadillajuan
             }
         }
 
+        public static void SerializarPersonajeGanador(Personajes personajeGanador){
+        //Creamos una ruta y donde estará nuestro JSON
+        string path;
+        path = @"C:\Users\Usuario\Desktop\ArchivoJSON\ganadores.JSON";
+
+        using (var NuevoArchivoJson = new FileStream(path, FileMode.Create))
+        {
+        using(StreamWriter sw = new StreamWriter(NuevoArchivoJson)){
+            string? serializarArchivos = JsonSerializer.Serialize(personajeGanador);
+            sw.WriteLine(serializarArchivos);
+            sw.Close();
+        }
+        }
+
+
+        }
         
 
 
