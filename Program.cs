@@ -8,16 +8,6 @@ namespace rpg_2022_bobadillajuan
     {
         static int Main(string[] args){
 
-
-            // V 1.0: Carga y guarda correctamente los datos. La pelea se hace según una sola variable y se elimina correctamente.
-            // Debemos: Pasar a que la carga sea automatizada y que los resultados se guarden en un archivo JSON. Nos tiene que dar a elegir
-            // si es que queremos imprimir el archivo JSON.
-
-            // Comienzo V1.1 20:19 Agregamos un switch. 
-            // V1.1 20:36 Al ganador lo escribe dentro de nuestro archivo JSON. Todavía no podemos sacar jugadores desde ahí.
-
-
-
             List <Personajes> TeamRadiant = new List<Personajes>();
             List <Personajes> TeamDire = new List<Personajes>();
             Personajes PeleadorTeamRadiant = new Personajes();
@@ -32,7 +22,6 @@ namespace rpg_2022_bobadillajuan
             Console.WriteLine("3) Salir.");
             opcion = Convert.ToInt32(Console.ReadLine());
 
-            // V 1.1: Todo deberia estar adentro de switch pero alta paja ahora.
             do{
             switch (opcion)
             {
@@ -53,13 +42,19 @@ namespace rpg_2022_bobadillajuan
             //Carga de peleadores
             Console.WriteLine("\n--- Carga de personajes para el Team Radiant ---");
             CargarDatos(TeamRadiant);
+            SerializarEquipoCargado(TeamRadiant);
+
             foreach (Personajes personajeX in TeamRadiant)
             {
                 personajeX.MostrarDatos();
                 personajeX.MostrarCaracteristicas();
             }
+
+
+
             Console.WriteLine("\n--- Carga de personajes para el Team Dire ---");
             CargarDatos(TeamDire);
+            SerializarEquipoCargado(TeamDire);
             foreach (Personajes personajeX in TeamDire)
             {
                 personajeX.MostrarDatos();
@@ -244,8 +239,24 @@ namespace rpg_2022_bobadillajuan
 
 
         }
-        
 
+        public static void SerializarEquipoCargado(List <Personajes> team){
+        //Creamos una ruta y donde estará nuestro JSON
+        string path;
+        path = @"C:\Users\Usuario\Desktop\ArchivoJSON\jugadores.JSON";
+
+        using (var NuevoArchivoJson = new FileStream(path, FileMode.Create))
+        {
+        using(StreamWriter sw = new StreamWriter(NuevoArchivoJson)){
+            string? serializarArchivos = JsonSerializer.Serialize(team);
+            sw.WriteLine(serializarArchivos);
+            sw.Close();
+        }
+        }
+
+
+        }
+        
 
     }
 }
